@@ -9,11 +9,11 @@ namespace RastrToPFC
     // Branch
     internal class RastrBranch
     {
-        public int    Start, End;        
-        public BranchType Type;                    
-        public bool   State;                    
+        public int Start, End;
+        public BranchType Type;
+        public bool State;
 
-        public double R,X,B,G;
+        public double R, X, B, G;
 
         public RastrBranch(int start, int end,
                         BranchType type, bool state,
@@ -83,7 +83,7 @@ namespace RastrToPFC
 
             return "new Branch(){Start = " + $"{Start}" + ", End = " + $"{End}, " +
                                 $"Ktr=1" +
-                                $"{y}" +                                
+                                $"{y}" +
                                 $"{shunt}" +
                                 "},";
         }
@@ -95,12 +95,12 @@ namespace RastrToPFC
         public double Ktr;
 
         public TransBranch(int start, int end,
-                        BranchType type, bool state, 
+                        BranchType type, bool state,
                         double r, double x, double b, double g,
-                        double ktr) 
+                        double ktr)
             : base(start, end, type, state, r, x, b, g)
         {
-            this.Ktr = ktr;
+            Ktr = ktr;
         }
 
         public override string ToString()
@@ -117,13 +117,13 @@ namespace RastrToPFC
                                 $"Ktr={Math.Round(Ktr, 6).ToString().Replace(",", ".")}" +
                                 $", Y=1/new Complex(" + $"{Math.Round(R, 4).ToString().Replace(",", ".")}" +
                                                     ", " + $"{Math.Round(X, 4).ToString().Replace(",", ".")}" + ")" +
-                                $"{shunt}" + 
+                                $"{shunt}" +
                                 "},";
         }
     }
 
 
-    internal  enum BranchType
+    internal enum BranchType
     {
         Line = 0,
         Breaker = 1,

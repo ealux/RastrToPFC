@@ -20,7 +20,7 @@ namespace RastrToPFC
         private int nodesCount;
         private int branchesCount;
 
-        private readonly RastrClass   rastr;
+        private readonly RastrClass rastr;
         private readonly IRastr _rastr;
 
         public List<RastrNode> Nodes;
@@ -35,20 +35,20 @@ namespace RastrToPFC
         // ctor
         public RastrObject(string filename)
         {
-            this._rastr = new RastrClass();
-            _rastr.Load(RG_KOD.RG_REPL, filename, String.Empty);
+            _rastr = new RastrClass();
+            _rastr.Load(RG_KOD.RG_REPL, filename, string.Empty);
 
             fileSavePath = filename.Replace(filename.Split("\\")[filename.Split("\\").Length - 1], "");
             file = filename.Split("\\")[filename.Split("\\").Length - 1];
 
             Console.WriteLine("===================================");
-            Console.WriteLine($"\nЗагружен файл: {filename.Split("\\")[filename.Split("\\").Length -1]}");
+            Console.WriteLine($"\nЗагружен файл: {filename.Split("\\")[filename.Split("\\").Length - 1]}");
 
             nodesCount = GetTable(nodesName).Count;
             branchesCount = GetTable(branchesName).Count;
 
             Nodes = GenerateNodesFromStorage();
-            Console.WriteLine($"Список узлов сформирован. Узлов: {Nodes.Count} (База: {Nodes.Where(n=>n.Type==NodeType.Slack).Count()}" +
+            Console.WriteLine($"Список узлов сформирован. Узлов: {Nodes.Count} (База: {Nodes.Where(n => n.Type == NodeType.Slack).Count()}" +
                                                                                 $"\tНагрузка: {Nodes.Where(n => n.Type == NodeType.Load).Count()}" +
                                                                                 $"\tГенерация: {Nodes.Where(n => n.Type == NodeType.Gen).Count()})");
             Branches = GenerateBranchesFromStorage();
@@ -94,7 +94,7 @@ namespace RastrToPFC
             using (StreamWriter sr = new StreamWriter(doc))
             {
                 sr.WriteLine(data);
-            }          
+            }
         }
 
         #region Generate Data From Rastr
