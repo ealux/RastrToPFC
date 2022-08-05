@@ -55,6 +55,9 @@ namespace RastrToPFC
             Console.WriteLine($"Список ветвей сформирован. Ветвей: {Branches.Count}");
         }
 
+        /// <summary>
+        /// Print txt interpritation into file
+        /// </summary>
         public void PrintPFCFile()
         {
 
@@ -81,10 +84,9 @@ namespace RastrToPFC
                 sb.AppendLine("\t" + item.ToString());  // branch
             sb.AppendLine("};\n\n");
 
-            // Engine
-            sb.AppendLine("var options = new CalculationOptions();\n");
-            sb.AppendLine("var engine = new Engine(nodes, branches, options);\n\n");
-            sb.AppendLine("return engine;");
+            // Grid
+            sb.AppendLine("var grid = new Grid(nodes, branches);\n\n");
+            sb.AppendLine("return grid;");
 
             #endregion
 
@@ -128,12 +130,14 @@ namespace RastrToPFC
                         type = NodeType.Slack;
                         double vpre_slack = (double)GetInternalValue("vras", i, nodesName);
                         node = new SlackNode(Num, Name, Unom, type, State, Pn, Qn, Pg, Qg, Bsh, Gsh, Delta, vpre_slack);
-                        nodes.Add(node);
+                        if(node.State != false)
+                            nodes.Add(node);
                         break;
                     case 1:
                         type = NodeType.Load;
                         node = new RastrNode(Num, Name, Unom, type, State, Pn, Qn, Pg, Qg, Bsh, Gsh, Delta);
-                        nodes.Add(node);
+                        if (node.State != false)
+                            nodes.Add(node);
                         break;
                     case 2:
                     case 3:
@@ -144,7 +148,8 @@ namespace RastrToPFC
                         double Vpre = (double)GetInternalValue("vzd", i, nodesName);
                         node = new GenNode(Num, Name, Unom, type, State, Pn, Qn, Pg, Qg, Bsh, Gsh, Delta,
                                            Qmin, Qmax, Vpre);
-                        nodes.Add(node);
+                        if (node.State != false)
+                            nodes.Add(node);
                         break;
                 }
             });
@@ -178,18 +183,21 @@ namespace RastrToPFC
                     case 0:
                         type = BranchType.Line;
                         branch = new LineBranch(Start, End, type, State, R, X, B, G);
-                        branches.Add(branch);
+                        if (branch.State != false)
+                            branches.Add(branch);
                         break;
                     case 1:
                         type = BranchType.Trans;
                         var ktr = (double)GetInternalValue("ktr", i, branchesName);
                         branch = new TransBranch(Start, End, type, State, R, X, B, G, ktr);
-                        branches.Add(branch);
+                        if (branch.State != false)
+                            branches.Add(branch);
                         break;
                     case 2:
                         type = BranchType.Breaker;
                         branch = new BreakerBranch(Start, End, type, State, R, X, B, G);
-                        branches.Add(branch);
+                        if (branch.State != false)
+                            branches.Add(branch);
                         break;
                 }
             });

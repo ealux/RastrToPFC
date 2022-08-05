@@ -1,5 +1,4 @@
-﻿using RastrToPFC.Data;
-using System;
+﻿using System;
 
 namespace RastrToPFC
 {
@@ -22,6 +21,7 @@ namespace RastrToPFC
             }
 
             Console.WriteLine("\nНажмите любую клавишу для завершения...");
+            Console.ReadKey();
         }
     }
 
